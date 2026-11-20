@@ -1,0 +1,8 @@
+flowchart LR
+  D[Documents PDF et photos] --> F[(Fichiers originaux MinIO)]
+  D --> S{PDF scanné ?}
+  S -->|oui| OCR[OCR local] --> E[Extraction texte et images]
+  S -->|non| E
+  E --> C[Découpage passages, tableaux, figures]
+  C --> M[Métadonnées + embeddings]
+  M --> I[(Index Qdrant)]

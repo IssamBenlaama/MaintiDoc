@@ -1,0 +1,11 @@
+flowchart LR
+  UI[Interface web Streamlit<br/>question + photo] -->|question + photo| API[API FastAPI<br/>authentification + autorisation<br/>CONTRÔLE 1]
+  API -->|utilisateur + groupes| WF[Workflow LangGraph]
+  WF -->|requête + filtre de groupes| RAG[Recherche documentaire<br/>CONTRÔLE 2 : filtre avant récupération]
+  RAG --> STO[(Qdrant · PostgreSQL · MinIO)]
+  WF -->|image + extraits| VLM[Modèle vision-langage]
+  WF -->|si besoin| MCPC[Client MCP]
+  MCPC -->|appel + jeton| MCPS[Serveur MCP maintenance<br/>CONTRÔLE 5 : droits à chaque appel]
+  WF -->|brouillon de réponse| VER[Vérification des citations<br/>CONTRÔLE 3]
+  WF -->|brouillon de ticket| HUM[Validation humaine<br/>CONTRÔLE 4]
+  HUM -->|approbation| MCPC

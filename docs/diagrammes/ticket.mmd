@@ -1,0 +1,8 @@
+flowchart LR
+  B[Brouillon de ticket] --> A[Affichage du contenu exact]
+  A --> H{Approbation humaine}
+  H -->|modification| B
+  H -->|oui| J[Jeton lié à l'utilisateur et au contenu]
+  J --> M[create_ticket + clé d'idempotence]
+  M --> S[Serveur MCP : droits, jeton, doublon]
+  S --> T[Ticket créé ou refus]
